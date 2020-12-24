@@ -1,0 +1,54 @@
+.topbar {
+    width: 100%;
+}
+.no-arrow .dropdown-toggle::after {
+    display: none;
+}
+.topbar .dropdown-list {
+    padding: 0;
+    border: none;
+    overflow: hidden;
+}
+.shadow {
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+}
+.animated--grow-in, .sidebar .nav-item .collapse {
+    animation-name: growIn;
+    animation-duration: 500ms;
+    animation-timing-function: transform cubic-bezier(0.18, 1.25, 0.4, 1), opacity cubic-bezier(0, 1, 0.4, 1);
+}
+.sidebar .nav-item .nav-link .badge-counter,
+.topbar .nav-item .nav-link .badge-counter {
+  position: relative;
+  transform: scale(0.7);
+  transform-origin: top right;
+  right: 14px;
+  top: -6px;
+}
+.topbar .topbar-search {
+  width: 25rem;
+  margin-left: 20px;
+}
+.img-profile {
+  width: 35px;
+  height: 35px;
+}
+.navbar-nav .nav-item .nav-link,
+.topbar .topbar-search input,
+.topbar .topbar-search button{
+  box-shadow: none !important;
+}
+.nav-item .nav-link .userName {
+  max-width: 150px!important;
+  margin-right: 10px;
+  position: relative;
+  top: 7px;
+}
+@keyframes growIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+}

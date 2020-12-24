@@ -1,0 +1,47 @@
+.masthead {
+  position: relative;
+  background-color: #343a40;
+  background-image: linear-gradient(to top, rgba(51,51,51, 0.3), rgba(51,51,51, 0.3)),url("../img/bg-masthead.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-top: 8rem;
+  padding-bottom: 6rem;
+  }
+  
+.masthead .overlay {
+  position: absolute;
+  background-color: #212529;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.4;
+}
+  
+.masthead .title {
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+.masthead .title h1 {
+  font-size: 3rem !important;
+  margin-bottom: 30px;
+}
+.masthead .title h2 {
+  font-weight: 400;
+  opacity: 0.8;
+}
+  
+@media (min-width: 768px) {
+  .masthead .title h1 {
+    font-size: 4rem !important;
+    margin-bottom: 1rem;
+  }
+  .masthead {
+    padding-top: 10rem;
+  }
+  .masthead .title h2 {
+    font-size: 40px;
+    opacity: 0.8;
+  }
+}

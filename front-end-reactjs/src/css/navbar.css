@@ -1,0 +1,13 @@
+#mainNav h1 {
+    font-size: 40px !important;
+    margin: 0px;
+}
+#mainNav a {
+    font-size: 20px !important;
+}
+#mainNav .nav-item:hover {
+    opacity: 0.5;
+}
+.sticky {
+    background-color: #446cb3;
+}

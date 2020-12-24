@@ -1,0 +1,14 @@
+.main-content {
+    width: 100%;
+    overflow-x: hidden;
+}
+.no-radius {
+    border-radius: 0%;
+    border-width: 1px;
+}
+.bg-user-home {
+        height: 100vh;
+        background: center url("../img/bg-user-home.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+}
