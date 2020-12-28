@@ -14,7 +14,8 @@ function setStatistic(props) {
 }
 export function deleteUser(id) {
   return dispatch => {
-    return axios.post(`/striker/api/admin/delete-user`, id)
+    var dto = { 'id': id }
+    return axios.post(`/striker/api/admin/delete-user`, dto)
       .then(res => {
         dispatch(getListFeedbacks());
       }).catch(err => {

@@ -4,6 +4,7 @@ import SideBar from "../components/SideBar";
 import TopBar from "../components/TopBar";
 import { connect } from "react-redux";
 import { PieChart } from "react-minimal-pie-chart";
+import Axios from "axios";
 
 function Tag(props) {
   return (
@@ -15,17 +16,7 @@ function Tag(props) {
 const mapStateToProps = (state) => {
   return {
     feedbacks: state.admin.feedbacks,
-    statistic: {
-      shortSchedulerUpcoming: 30,
-      longSchedulerUpcoming: 30,
-      complete: 30,
-      late: 5,
-      other: 5,
-      login: 30,
-      register: 5,
-      newShortScheduler: 10,
-      newLongScheduler: 5
-    }
+    statistic: state.admin.statistic
   };
 }
 const mapDispatchToState = (dispatch) => ({
@@ -116,11 +107,8 @@ function Dashboard(props) {
       </div>
     </div>
 
-    {/* Content Row */}
-    <div className="row">
-      {/* Content Column */}
+    {/* <div className="row">
       <div className="col-xl-7 col-lg-6 mb-4">
-        {/* Project Card Example */}
         <div className="card shadow mb-4">
           <div className="card-header py-3">
             <h6 className="m-0 font-weight-bold text-primary">Status</h6>
@@ -150,14 +138,11 @@ function Dashboard(props) {
         </div>
       </div>
 
-      {/* Pie Chart */}
       <div className="col-xl-4 col-lg-6">
         <div className="card shadow mb-4">
-          {/* Card Header - Dropdown */}
           <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 className="m-0 font-weight-bold text-primary">Chart</h6>
           </div>
-          {/* Card Body */}
           <div className="card-body">
             <div className="chart-pie pt-4 pb-2">
               <PieChart data={[
@@ -187,7 +172,7 @@ function Dashboard(props) {
           </div>
         </div>
       </div>
-    </div>
+    </div> */}
   </div>
   );
 };
@@ -228,20 +213,77 @@ function Feedback(props) {
   );
 };
 function UserManage(props) {
+  const [users, setUser] = useState([]);
+  const search = (e) => {
+    e.preventDefault();
+    var email = document.querySelector('#user').value;
+    if (email === '') return;
+    var dto = { 'email': email }
+    Axios.post(`/striker/api/admin/search`, dto)
+      .then(res => {
+        if (res.data) {
+          setUser([res.data]);
+        }
+        else {
+          setUser([]);
+        }
+      }).catch(error => {
+        alert("Can not connect to server");
+      });
+  };
+  const delUser = () => {
+    props.deleteUser(users[0].id);
+    alert("success");
+    setUser([]);
+  };
   return (
-    <div className="row">
-      {/* Topbar Search */}
-      <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-        <div className="input-group">
-          <input type="text" className="form-control bg-light small" placeholder="Search user..."
-            aria-label="Search" aria-describedby="basic-addon2" />
-          <div className="input-group-append">
-            <button className="btn btn-primary" type="button">
-              <i className="fas fa-search fa-sm"></i>
-            </button>
+    <div>
+      <div className="row mx-2 my-5">
+        {/* Topbar Search */}
+        <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          <div className="input-group">
+            <input type="text" className="form-control bg-light small" placeholder="Search user..."
+              id="user" />
+            <div className="input-group-append">
+              <button className="btn btn-primary" onClick={search}>
+                <i className="fas fa-search fa-sm"></i>
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
+      <div className="row mx-4">
+        <table border="2" width="100%" valign="center" bordercolor="#007bff">
+          <thead>
+            <tr height="50px" bgcolor="#007bff"><td colSpan="5"
+              style={{ textAlign: "center", color: "white", fontSize: "24px", fontWeight: "700" }}>
+              User</td></tr>
+          </thead>
+          <tbody>
+            <tr style={{ textAlign: "center" }} height="45px">
+              <th>Id</th>
+              <th>Email</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Sex</th>
+              <th></th>
+            </tr>
+            {users.map((user, index) => {
+              return (
+                <tr height="40px" key={user.id}>
+                  <td style={{ textAlign: "center" }}>{user.id}</td>
+                  <td>{user.email}</td>
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
+                  <th>{user.sex}</th>
+                  <th style={{ textAlign: 'center' }}>
+                    <span onClick={delUser} type="button"><i className='fas fa-trash fa-sm'></i></span></th>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
@@ -251,7 +293,7 @@ function Admin(props) {
   const settingAccount = [
     <Dashboard statistic={props.statistic} />,
     <Feedback feedbacks={props.feedbacks} />,
-    <UserManage />
+    <UserManage deleteUser={props.deleteUser} />
   ];
   //list item in header of setting
   const setting = [

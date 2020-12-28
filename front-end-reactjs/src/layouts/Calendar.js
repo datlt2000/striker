@@ -48,10 +48,6 @@ const mapStateToProps = state => {
 class Calendar extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			data: props.shortSchedulers,
-			get: true
-		};
 		this.fields = {
 			id: { name: "id" },
 			subject: { name: "title", title: "Title", default: "No Title" },
@@ -64,6 +60,7 @@ class Calendar extends React.Component {
 		};
 		this.delShortSch = this.delShortSch.bind(this);
 		this.addShortSch = this.addShortSch.bind(this);
+		this.dataReturn = this.dataReturn.bind(this);
 	}
 	applyCategoryColor(args, currentView) {
 		let color = args.data.color;
@@ -92,7 +89,6 @@ class Calendar extends React.Component {
 	delShortSch() {
 		var id = document.querySelector("#IdScheduler").value;
 		this.props.deleteShortScheduler(id);
-		this.setState({ get: !this.state.get });
 		this.scheduleObj.closeEditor();
 	}
 	addShortSch() {
@@ -113,9 +109,15 @@ class Calendar extends React.Component {
 		if (scheduler.repeat.indexOf("COUNT") === -1) {
 			scheduler.repeat = scheduler.repeat + "COUNT=365";
 		}
+		const convert = (date) => {
+			const temp = new Date(date);
+			var result = temp.toJSON().substring(0, 10) + ' ' + temp.toTimeString().substring(0, 5);
+			return result;
+		}
+		scheduler.endTime = convert(scheduler.endTime);
+		scheduler.startTime = convert(scheduler.startTime);
 		scheduler.complete = "false";
 		this.props.addShortScheduler(scheduler);
-		this.setState({ get: !this.state.get });
 		this.scheduleObj.closeEditor();
 	}
 	editorTemplate(props) {
@@ -133,10 +135,10 @@ class Calendar extends React.Component {
 				<input id="Type" className="e-field e-input" type="text" name="type" style={{ width: '50%' }} />
 			</td></tr>
 			<tr><td className="e-textlabel">From</td><td colSpan={4}>
-				<DateTimePickerComponent format='yyyy-MM-dd hh:mm:ss' id="startTime" data-name="StartTime" value={new Date(props.startTime || props.StartTime)} className="e-field"></DateTimePickerComponent>
+				<DateTimePickerComponent format='yyyy-MM-dd hh:mm a' id="startTime" data-name="StartTime" value={new Date(props.startTime || props.StartTime)} className="e-field"></DateTimePickerComponent>
 			</td></tr>
 			<tr><td className="e-textlabel">To</td><td colSpan={4}>
-				<DateTimePickerComponent format='yyyy-MM-dd hh:mm:ss' id="endTime" data-name="EndTime" value={new Date(props.endTime || props.EndTime)} className="e-field"></DateTimePickerComponent>
+				<DateTimePickerComponent format='yyyy-MM-dd hh:mm a' id="endTime" data-name="EndTime" value={new Date(props.endTime || props.EndTime)} className="e-field"></DateTimePickerComponent>
 			</td></tr>
 			<tr><td className="e-textlabel">Recurrence</td><td colSpan={4}>
 				<RecurrenceEditorComponent ref={recurrObject => this.recurrObject = recurrObject} id='RecurrenceRule' frequencies={['daily', 'weekly']} value={props.repeat || "FREQ=DAILY;INTERVAL=1;COUNT=1"}></RecurrenceEditorComponent>
@@ -192,6 +194,9 @@ class Calendar extends React.Component {
 	componentDidMount() {
 		this.props.getShortScheduler();
 	}
+	dataReturn() {
+		return this.props.shortSchedulers;
+	}
 	render() {
 		return (
 			<div id="calendar" className="d-flex bg-user-home">
@@ -204,7 +209,7 @@ class Calendar extends React.Component {
 							ref={schedule => this.scheduleObj = schedule}
 							currentView="Week" selectedDate={this.getCurdate()}
 							eventRendered={this.onEventRendered.bind(this)}
-							eventSettings={{ dataSource: this.state.data, fields: this.fields }}
+							eventSettings={{ dataSource: this.dataReturn() , fields: this.fields }}
 							editorTemplate={this.editorTemplate.bind(this)}
 							actionFailure={this.onActionFailure.bind(this)}
 							popupOpen={this.onPopupOpen.bind(this)}>

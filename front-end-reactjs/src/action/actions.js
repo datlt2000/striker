@@ -89,7 +89,6 @@ export const addShortScheduler = (shortScheduler) => {
 		else {
 			axios.post(`/striker/api/short-scheduler/insert`, shortScheduler)
 				.then(res => {
-					console.log("add");
 					dispatch(getShortScheduler());
 				}).catch(error => {
 					alert("Can not connect to server");
@@ -124,7 +123,6 @@ export const getShortScheduler = () => {
 		axios.post(`/striker/api/short-scheduler/get-upcoming`)
 			.then(res => {
 				if (res.data) {
-					console.log("set");
 					dispatch(setShortSchedulerUpcoming(res.data));
 				}
 				else {
@@ -136,10 +134,10 @@ export const getShortScheduler = () => {
 		axios.post(`/striker/api/short-scheduler/get-over`)
 			.then(res => {
 				if (res.data) {
-					dispatch(setLongSchedulerOver(res.data));
+					dispatch(setShortSchedulerOver(res.data));
 				}
 				else {
-					dispatch(setLongSchedulerOver(itemsLongScheduler.over));
+					dispatch(setShortSchedulerOver(itemsShortScheduler.over));
 				}
 			}).catch(error => {
 				alert("Can not connect to server");

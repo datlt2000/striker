@@ -78,7 +78,7 @@ class SideBar extends React.Component {
 
 						{/*} Nav Item - Admin */}
 						{
-							this.props.id !== "1" ? null :
+							this.props.id !== 1 ? null :
 								<li className="nav-item">
 									<Link className="nav-link"
 										to="/admin">
