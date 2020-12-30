@@ -71,3 +71,8 @@
   border-left: solid !important;
   border-left-color: #4e73df !important;
 }
+.bg-password-image {
+  background: url("./img/forgot.jfif");
+  background-position: center;
+  background-size: cover;
+}

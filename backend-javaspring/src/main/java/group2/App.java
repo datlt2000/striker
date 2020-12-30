@@ -9,5 +9,4 @@ public class App {
 		// TODO Auto-generated method stub
 		SpringApplication.run(App.class, args);
 	}
-
 }

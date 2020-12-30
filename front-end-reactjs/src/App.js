@@ -12,7 +12,7 @@ import HomeworkPage from './layouts/HomeworkPage';
 import Groups from "./layouts/Groups";
 import Admin from "./layouts/Admin";
 import Profile from "./layouts/Profile";
-
+import ForgotPassword from './layouts/Forgot-pass';
 function App() {
   return (
     // React router container
@@ -29,6 +29,7 @@ function App() {
         <Route path="/groups" component={Groups} />
         <Route path="/admin" component={Admin} />
         <Route path="/profile" component={Profile} />
+        <Route path='/forgot-password' component={ForgotPassword} />
         <Route component={Error} />
       </Switch>
     </Router>

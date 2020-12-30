@@ -19,7 +19,10 @@ function Account(props) {
 	const addData = (infor) => {
 		Axios.post(`/striker/api/infor/update-infor`, infor)
 			.then(res => {
-				if (res.data) alert("success");
+				if (res.data) {
+					props.getData();
+					alert("success");
+				}
 				else alert("cannot update");
 			}).catch(error => {
 				alert("Can not connect to server");
@@ -52,7 +55,10 @@ function School(props) {
 	const addData = (school) => {
 		Axios.post(`/striker/api/infor/update-school`, school)
 			.then(res => {
-				if (res.data) alert("success");
+				if (res.data) {
+					props.getData();
+					alert("success");
+				}
 				else alert("can update");
 			}).catch(error => {
 				alert("Can not connect to server");

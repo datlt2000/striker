@@ -104,9 +104,9 @@ class Calendar extends React.Component {
 		scheduler.description = document.querySelector("#Description").value;
 		scheduler.repeat = this.recurrObject.value;
 		if (!scheduler.repeat) {
-			scheduler.repeat = "FREQ=DAILY;INTERVAL=1;COUNT=1";
+			scheduler.repeat = "";
 		}
-		if (scheduler.repeat.indexOf("COUNT") === -1) {
+		if (scheduler.repeat.indexOf("COUNT") === -1 && scheduler.repeat.indexOf("UNTIL") === -1) {
 			scheduler.repeat = scheduler.repeat + "COUNT=365";
 		}
 		const convert = (date) => {
@@ -141,13 +141,13 @@ class Calendar extends React.Component {
 				<DateTimePickerComponent format='yyyy-MM-dd hh:mm a' id="endTime" data-name="EndTime" value={new Date(props.endTime || props.EndTime)} className="e-field"></DateTimePickerComponent>
 			</td></tr>
 			<tr><td className="e-textlabel">Recurrence</td><td colSpan={4}>
-				<RecurrenceEditorComponent ref={recurrObject => this.recurrObject = recurrObject} id='RecurrenceRule' frequencies={['daily', 'weekly']} value={props.repeat || "FREQ=DAILY;INTERVAL=1;COUNT=1"}></RecurrenceEditorComponent>
+				<RecurrenceEditorComponent ref={recurrObject => this.recurrObject = recurrObject} id='RecurrenceRule' frequencies={['daily', 'weekly']} value={props.repeat}></RecurrenceEditorComponent>
 			</td></tr>
 			<tr><td className="e-textlabel">Priority</td><td colSpan={4} >
 				<DropDownListComponent id="Priority" placeholder='Choose priority' data-name="priority" className="e-field" dataSource={['High', 'Middle', 'Low']}></DropDownListComponent>
 			</td></tr>
 			<tr><td className="e-textlabel">Location</td><td colSpan={4}>
-				<input id="Location" className="e-field e-input" type="text" name="location" defaultValue={props.location} style={{ width: '50%' }} />
+				<input id="Location" className="e-field e-input" type="text" name="location" style={{ width: '50%' }} />
 			</td></tr>
 			<tr><td className="e-textlabel">Description</td><td colSpan={4}>
 				<textarea id="Description" className="e-field e-input" name="description" rows={3} cols={50} style={{ width: '100%', height: '60px !important', resize: 'vertical' }}></textarea>
@@ -209,7 +209,7 @@ class Calendar extends React.Component {
 							ref={schedule => this.scheduleObj = schedule}
 							currentView="Week" selectedDate={this.getCurdate()}
 							eventRendered={this.onEventRendered.bind(this)}
-							eventSettings={{ dataSource: this.dataReturn() , fields: this.fields }}
+							eventSettings={{ dataSource: this.dataReturn(), fields: this.fields }}
 							editorTemplate={this.editorTemplate.bind(this)}
 							actionFailure={this.onActionFailure.bind(this)}
 							popupOpen={this.onPopupOpen.bind(this)}>

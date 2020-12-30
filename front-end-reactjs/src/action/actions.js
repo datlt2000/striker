@@ -75,7 +75,7 @@ export const addShortScheduler = (shortScheduler) => {
 			shortScheduler.endTime = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + ' ' + shortScheduler.endTime + ":00";
 		}
 		if (shortScheduler.endTime < shortScheduler.startTime) {
-			alert("end time bigger than end time");
+			alert("start time bigger than end time");
 			return false;
 		}
 		if (shortScheduler.id) {

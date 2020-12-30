@@ -49,25 +49,24 @@ export default function Imgs(props) {
 	const infors = [
 		{
 			id: 1,
-			title: "Fully Responsive Design",
-			subtitle: "When you use a theme created by Start Bootstrap, you know that the theme will look great on any device," +
-				"whether it's a phone, tablet, or desktop the page will behave responsively!",
+			title: "Sứ mệnh",
+			subtitle: "Ứng dụng tiện ích này giúp người dùng lên những kế hoạch học tập cho mình một cách hiệu "
+				+ "quả và chính xác, bên cạnh đó họ còn có thể nắm bắt nội dung bài học trên lớp, các kế hoạch học "
+				+ "tập của lớp cũng như làm bài tập về nhà mọi lúc mọi nơi đều tiện lợi.",
 			img: background_1
 		},
 		{
 			id: 2,
-			title: "Cross platform",
-			subtitle: "Newly improved, and full of great utility classes," +
-				"Bootstrap 4 is leading the way in mobile responsive web development!" +
-				"All of the themes on Start Bootstrap are now using Bootstrap 4!",
+			title: "Giao diện",
+			subtitle: "Giao diện được thiết kế đẹp, đơn giản và ổn định. Nhờ đó, người dùng sẽ"
+				+ "cảm thấy dễ chịu, thoải mái và phù hợp với mọi đối tượng mỗi khi điện thoại được kết nối mạng.",
 			img: background_2
 		},
 		{
 			id: 3,
-			title: "Easy to use",
-			subtitle: "Landing Page is just HTML and CSS with a splash of SCSS for users who demand" +
-				"some deeper customization options. Out of the box, just add your content and images," +
-				"and your new landing page will be ready to go!",
+			title: "Dễ dàng sử dụng",
+			subtitle: "Ứng dụng không chỉ có giao diện đơn giản, rõ ràng và dễ sử dụng, "
+				+ "nhờ vậy nó trở nên phù hợp với những đối tượng là học sinh trung học, phổ thông và sinh viên hơn, ",
 			img: background_3
 		},
 	];

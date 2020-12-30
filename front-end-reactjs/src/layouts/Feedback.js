@@ -13,6 +13,7 @@ export default function Feedback(props) {
 			.then(res => {
 				if (res.data) {
 					alert("susscess");
+					document.querySelector("#feedback").value = "";
 				}
 			}).catch(err => {
 				alert("cannot connect server");

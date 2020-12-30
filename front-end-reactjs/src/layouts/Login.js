@@ -152,8 +152,8 @@ class Login extends React.Component {
 											className="btn btn-lg btn-success btn-block text-uppercase"
 											href="#register">Register</Link>
 										<div className="text-center m-3">
-											<a className="small"
-												href="#forgot-password">Forgot password?</a>
+											<Link className="small"
+												to="/forgot-password">Forgot password?</Link>
 										</div>
 									</form>
 								</div>

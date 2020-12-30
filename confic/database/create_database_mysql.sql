@@ -64,3 +64,11 @@ create table FEEDBACK(
     EMAIL varchar(100),
     FEEDBACK text
 );
+create table statistic(
+	ID int not null primary key auto_increment,
+    DATE date,
+    LOGIN int,
+    REGISTER int,
+    NEW_LONG_SCHEDULER int,
+    NEW_SHORT_SCHEDULER int
+);

@@ -3,6 +3,7 @@ package group2.login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import group2.admin.AdminService;
 import group2.data.entities.Account;
 import group2.data.patterns.AccountSingleton;
 
@@ -10,10 +11,15 @@ import group2.data.patterns.AccountSingleton;
 public class LoginService {
 	@Autowired
 	private LoginStorage loginStorage;
+	@Autowired
+	private AdminService adminService;
 	//	Login
 	public boolean checkAccount(String email, String password) {
 		if(this.getAccountByEmail(email) == null) return false;
-		if(this.getAccountByEmail(email).getPassword().equals(password)) return true;
+		if(this.getAccountByEmail(email).getPassword().equals(password)) {
+			adminService.login();
+			return true;
+		}
 		return false;
 	}
 	public Account setAccountByEmail(String email) {

@@ -33,7 +33,7 @@ export default function Icons(props) {
 		},
 		{
 			title: "Easy to Use",
-			subtitle: "Ready to use with your own job, or customize the source files!",
+			subtitle: "Ready to use with your own job!",
 			icon: "icon-check"
 		}
 	];
