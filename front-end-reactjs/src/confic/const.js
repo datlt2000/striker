@@ -177,7 +177,7 @@ export const initialization = {
     firstName: "Guest",
     lastName: "Unknown",
     sex: "male",
-    birthDay: "2000-01-18",
+    birthDay: "2020-01-01",
     school: "",
     address: ""
   },

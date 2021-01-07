@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class LongSchedulerController {
 	
 	@ResponseBody
 	@PostMapping(value="/insert")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public String insertLongScheduler(@RequestBody(required = true) LongSchedulerDTO dto) {
 		LongScheduler longScheduler = this.convertToLongScheduler(dto);
 		LongScheduler result = longSchService.insertLongScheduler(longScheduler);
@@ -31,6 +33,7 @@ public class LongSchedulerController {
 	}
 	@ResponseBody
 	@PostMapping(value="/get-upcoming")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public List<LongSchedulerDTO> getLongSchedulersUpcoming() {
 		List<LongSchedulerDTO> dto = new ArrayList<LongSchedulerDTO>();
 		List<LongScheduler> schedulers = longSchService.getLongSchedulersUpcoming();
@@ -42,6 +45,7 @@ public class LongSchedulerController {
 	}
 	@ResponseBody
 	@PostMapping(value="/get-over")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public List<LongSchedulerDTO> getLongSchedulersOver() {
 		List<LongSchedulerDTO> dto = new ArrayList<LongSchedulerDTO>();
 		List<LongScheduler> schedulers = longSchService.getLongSchedulersOver();
@@ -53,6 +57,7 @@ public class LongSchedulerController {
 	}
 	@ResponseBody
 	@PostMapping(value="/update")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public String updateLongScheduler(@RequestBody(required = true) LongSchedulerDTO dto) {
 		LongScheduler longScheduler = this.convertToLongScheduler(dto);
 		LongScheduler oldScheduler = longSchService.updateLongScheduler(longScheduler);
@@ -61,6 +66,7 @@ public class LongSchedulerController {
 	}
 	@ResponseBody
 	@PostMapping(value="/delete")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public String deleteLongScheduler(@RequestBody(required = true) Map<String, Long> json) {
 		Long id = json.get("id");
 		longSchService.deleteLongSchedulerById(id);

@@ -3,6 +3,8 @@ package group2.user.informationManagement;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +21,11 @@ import group2.login.LoginDTO;
 public class InformationController {
 	@Autowired
 	private InformationService inforService;
-	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@PostMapping(value="/update-infor")
 	@ResponseBody
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public String updateInformation(@RequestBody(required = true) InformationDTO inforDTO) {
 		Infor infor = this.convertToInfor(inforDTO);
 		Infor result = inforService.updateInformation(infor);
@@ -30,6 +34,7 @@ public class InformationController {
 	}
 	@PostMapping(value="/update-school")
 	@ResponseBody
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public String updateSchool(@RequestBody(required = true) SchoolDTO dto) {
 		School school = this.convertToSchool(dto);
 		School result = inforService.updateSchool(school);
@@ -38,14 +43,16 @@ public class InformationController {
 	}
 	@PostMapping(value="/update-password")
 	@ResponseBody
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public String updatePassword(@RequestBody(required = true) Map<String, String> input) {
-		String password = input.get("password");
+		String password = passwordEncoder.encode(input.get("password"));
 		Account result = inforService.updatePassword(password);
 		if(result == null) return "false";
 		return "true";
 	}
 	@PostMapping(value="get-infor")
 	@ResponseBody
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public LoginDTO getInfor(@RequestBody(required = true) Map<String, Long> input) {
 		Long id = input.get("id");
 		Account acc = inforService.getAccount(id);
@@ -54,6 +61,7 @@ public class InformationController {
 	}
 	@PostMapping(value="feedback")
 	@ResponseBody
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public String sendFeedback(@RequestBody Map<String, String> input) {
 		String feedback = input.get("feedback");
 		inforService.saveFeedback(feedback);

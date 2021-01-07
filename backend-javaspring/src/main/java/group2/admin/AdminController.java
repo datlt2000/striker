@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class AdminController {
 	private AdminService adminService;
 	
 	@PostMapping(value="get-feedback")
+	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseBody
 	public List<FeedbackDTO> getFeedback() {
 		List<Feedback> list = adminService.getFeedback();
@@ -34,6 +36,7 @@ public class AdminController {
 		return listDTO;
 	}
 	@PostMapping(value="delete-user")
+	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseBody
 	public String deleteUser(@RequestBody Map<String, Long> input) {
 		Long id = input.get("id");
@@ -41,6 +44,7 @@ public class AdminController {
 		return "true";
 	}
 	@PostMapping(value="get-statistic")
+	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseBody
 	public StatisticDTO getStatistic() {
 		StatisticDTO dto;
@@ -50,6 +54,7 @@ public class AdminController {
 		return dto;
 	}
 	@PostMapping(value="search")
+	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseBody
 	public UserDTO searchUser(@RequestBody Map<String, String> json) {
 		String email = json.get("email");

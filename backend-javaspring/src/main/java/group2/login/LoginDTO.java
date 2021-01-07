@@ -24,4 +24,6 @@ public class LoginDTO {
 	private Date birthDay;
 	private String school;
 	private String address;
+	private String token;
+	private String type = "Bearer";
 }

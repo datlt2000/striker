@@ -21,7 +21,6 @@ public class LoginStorage {
 	
 	public Account createAccount(Account account) {
 		if(this.insertInformation(account.getInfomation()) == null) return null;
-		this.insertInformation(account.getInfomation());
 		this.accountRepos.save(account);
 		return account;
 	}

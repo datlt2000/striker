@@ -14,8 +14,8 @@ import { accountRegister } from "../confic/const";
  * @return {props} of component
  */
 const mapDispatchToProps = dispatch => ({
-	setUser: (user) => {
-		dispatch(actions.setUser(user));
+	login: (user) => {
+		dispatch(actions.login(user));
 	}
 });
 
@@ -126,8 +126,8 @@ class Register extends React.Component {
 			axios.post(`/striker/account/register`, userInfo)
 				.then(res => {
 					if (res.data) {
-						this.props.setUser(res.data);
-						this.setState({ redirect: true });
+						this.props.login(userInfo);
+						this.setState({redirect: true});
 					}
 					else {
 						this.setState({ emailMessage: "email is existed" });

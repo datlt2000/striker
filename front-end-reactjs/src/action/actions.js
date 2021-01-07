@@ -43,12 +43,20 @@ export function setShortSchedulerOver(shortScheduler) {
 };
 export const addLongScheduler = (longScheduler) => {
 	return dispatch => {
+		const token = localStorage.token;
 		if (longScheduler.endTime < longScheduler.startTime) {
-			alert("end time bigger than end time");
+			alert("stert time bigger than end time");
 			return false;
 		}
 		if (longScheduler.id) {
-			axios.post(`/striker/api/long-scheduler/update`, longScheduler)
+			axios({
+				method: "POST",
+				url: `/striker/api/long-scheduler/update`,
+				data: longScheduler,
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			})
 				.then(res => {
 					dispatch(getLongScheduler());
 				}).catch(error => {
@@ -56,7 +64,14 @@ export const addLongScheduler = (longScheduler) => {
 				});
 		}
 		else {
-			axios.post(`/striker/api/long-scheduler/insert`, longScheduler)
+			axios({
+				method: "POST",
+				url: `/striker/api/long-scheduler/insert`,
+				data: longScheduler,
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			})
 				.then(res => {
 					dispatch(getLongScheduler());
 				}).catch(error => {
@@ -68,18 +83,26 @@ export const addLongScheduler = (longScheduler) => {
 export const addShortScheduler = (shortScheduler) => {
 	return dispatch => {
 		var date = new Date();
-		if (shortScheduler.startTime.length < 10) {
-			shortScheduler.startTime = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + ' ' + shortScheduler.startTime + ":00";
-		}
-		if (shortScheduler.endTime.length < 10) {
-			shortScheduler.endTime = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + ' ' + shortScheduler.endTime + ":00";
-		}
+		const token = localStorage.token;
 		if (shortScheduler.endTime < shortScheduler.startTime) {
 			alert("start time bigger than end time");
 			return false;
 		}
+		if (shortScheduler.startTime.length < 10) {
+			shortScheduler.startTime = date.getFullYear() + "-" + (date.getMonth() >= 9 ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + "-" + (date.getDate() >= 10 ? date.getDate() : ('0' + date.getDate())) + ' ' + shortScheduler.startTime + ":00";
+		}
+		if (shortScheduler.endTime.length < 10) {
+			shortScheduler.endTime = date.getFullYear() + "-" + (date.getMonth() >= 9 ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + "-" + (date.getDate() >= 10 ? date.getDate() : ('0' + date.getDate())) + ' ' + shortScheduler.endTime + ":00";
+		}
 		if (shortScheduler.id) {
-			axios.post(`/striker/api/short-scheduler/update`, shortScheduler)
+			axios({
+				method: "POST",
+				url: `/striker/api/short-scheduler/update`,
+				data: shortScheduler,
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			})
 				.then(res => {
 					dispatch(getShortScheduler());
 				}).catch(error => {
@@ -87,7 +110,14 @@ export const addShortScheduler = (shortScheduler) => {
 				});
 		}
 		else {
-			axios.post(`/striker/api/short-scheduler/insert`, shortScheduler)
+			axios({
+				method: "POST",
+				url: `/striker/api/short-scheduler/insert`,
+				data: shortScheduler,
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			})
 				.then(res => {
 					dispatch(getShortScheduler());
 				}).catch(error => {
@@ -99,7 +129,15 @@ export const addShortScheduler = (shortScheduler) => {
 export const deleteLongScheduler = (props) => {
 	return dispatch => {
 		const id = { id: props };
-		return axios.post(`/striker/api/long-scheduler/delete`, id)
+		const token = localStorage.token;
+		return axios({
+			method: "POST",
+			url: `/striker/api/long-scheduler/delete`,
+			data: id,
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		})
 			.then(res => {
 				dispatch(getLongScheduler());
 			}).catch(error => {
@@ -110,7 +148,15 @@ export const deleteLongScheduler = (props) => {
 export const deleteShortScheduler = (props) => {
 	return dispatch => {
 		const id = { id: props };
-		return axios.post(`/striker/api/short-scheduler/delete`, id)
+		const token = localStorage.token;
+		return axios({
+			method: "POST",
+			url: `/striker/api/short-scheduler/delete`,
+			data: id,
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		})
 			.then(res => {
 				dispatch(getShortScheduler());
 			}).catch(error => {
@@ -120,7 +166,14 @@ export const deleteShortScheduler = (props) => {
 };
 export const getShortScheduler = () => {
 	return dispatch => {
-		axios.post(`/striker/api/short-scheduler/get-upcoming`)
+		const token = localStorage.token;
+		axios({
+			method: "POST",
+			url: `/striker/api/short-scheduler/get-upcoming`,
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		})
 			.then(res => {
 				if (res.data) {
 					dispatch(setShortSchedulerUpcoming(res.data));
@@ -131,7 +184,13 @@ export const getShortScheduler = () => {
 			}).catch(error => {
 				alert("Can not connect to server");
 			});
-		axios.post(`/striker/api/short-scheduler/get-over`)
+		axios({
+			method: "POST",
+			url: `/striker/api/short-scheduler/get-over`,
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		})
 			.then(res => {
 				if (res.data) {
 					dispatch(setShortSchedulerOver(res.data));
@@ -146,7 +205,14 @@ export const getShortScheduler = () => {
 };
 export const getLongScheduler = () => {
 	return dispatch => {
-		axios.post(`/striker/api/long-scheduler/get-upcoming`)
+		const token = localStorage.token;
+		axios({
+			method: "POST",
+			url: `/striker/api/long-scheduler/get-upcoming`,
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		})
 			.then(res => {
 				if (res.data) {
 					dispatch(setLongSchedulerUpcoming(res.data));
@@ -157,7 +223,13 @@ export const getLongScheduler = () => {
 			}).catch(error => {
 				alert("Can not connect to server");
 			});
-		axios.post(`/striker/api/long-scheduler/get-over`)
+		axios({
+			method: "POST",
+			url: `/striker/api/long-scheduler/get-over`,
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		})
 			.then(res => {
 				if (res.data) {
 					dispatch(setLongSchedulerOver(res.data));
@@ -174,5 +246,23 @@ export const getScheduler = () => {
 	return dispatch => {
 		dispatch(getShortScheduler());
 		dispatch(getLongScheduler());
+	}
+}
+export const login = (user) => {
+	return dispatch => {
+		axios({
+			method: "POST",
+			url: `/striker/account/login`,
+			data: user
+		})
+			.then(res => {
+				if (res.data.token) {
+					localStorage.setItem("token", res.data.token);
+					dispatch(setUser(res.data));
+				}
+			})
+			.catch(error => {
+				alert("Can connect to server");
+			});
 	}
 }

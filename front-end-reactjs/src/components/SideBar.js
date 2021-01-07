@@ -106,7 +106,7 @@ class SideBar extends React.Component {
 						</li>
 
 						{/*} Nav Item - Sign Out */}
-						<li className="nav-item">
+						<li className="nav-item" onClick={() => { localStorage.removeItem("token") }}>
 							<Link className="nav-link"
 								to="/">
 								<i className="fas link-icon fa-fw fa-sign-out-alt"></i>

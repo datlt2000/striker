@@ -76,17 +76,19 @@ class Login extends React.Component {
 				data: user
 			})
 				.then(res => {
-					if (res.data) {
+					if (res.data.token) {
+						localStorage.setItem("token", res.data.token);
 						this.setState({ redirect: true });
 						this.props.setUser(res.data);
 					}
 					else {
+						this.setState({ redirect: false });
 						this.setState({ passwordMessage: "invalid user or password" });
 					}
 				})
 				.catch(error => {
 					this.setState({ redirect: false });
-					alert("Can connect to server");
+					this.setState({ passwordMessage: "invalid user or password" });
 				});
 		}
 	}

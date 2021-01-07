@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class ShortSchedulerController {
 	
 	@ResponseBody
 	@PostMapping(value="/insert")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public String insertShortScheduler(@RequestBody(required = true) ShortSchedulerDTO dto) {
 		ShortScheduler shortScheduler = this.convertToShortScheduler(dto);
 		ShortScheduler result = shortSchService.insertShortScheduler(shortScheduler);
@@ -31,6 +33,7 @@ public class ShortSchedulerController {
 	}
 	@ResponseBody
 	@PostMapping(value="/get-upcoming")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public List<ShortSchedulerDTO> getShortSchedulersUpcoming() {
 		List<ShortSchedulerDTO> dto = new ArrayList<ShortSchedulerDTO>();
 		List<ShortScheduler> schedulers = shortSchService.getShortSchedulersUpcoming();
@@ -42,6 +45,7 @@ public class ShortSchedulerController {
 	}
 	@ResponseBody
 	@PostMapping(value="/get-over")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public List<ShortSchedulerDTO> getShortSchedulersOver() {
 		List<ShortSchedulerDTO> dto = new ArrayList<ShortSchedulerDTO>();
 		List<ShortScheduler> schedulers = shortSchService.getShortSchedulersOver();
@@ -53,6 +57,7 @@ public class ShortSchedulerController {
 	}
 	@ResponseBody
 	@PostMapping(value="/update")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public String updateLongScheduler(@RequestBody(required = true) ShortSchedulerDTO dto) {
 		ShortScheduler shortScheduler = this.convertToShortScheduler(dto);
 		ShortScheduler oldScheduler = shortSchService.updateShortScheduler(shortScheduler);
@@ -61,6 +66,7 @@ public class ShortSchedulerController {
 	}
 	@ResponseBody
 	@PostMapping(value="/delete")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public String deleteShortScheduler(@RequestBody(required = true) Map<String, Long> json) {
 		Long id = json.get("id");
 		if(shortSchService.deleteShortSchedulerById(id)) return "true";
@@ -79,8 +85,8 @@ public class ShortSchedulerController {
 			scheduler.setEndTime(Timestamp.valueOf(dto.getEndTime().substring(0, 16) + ":00"));
 		}catch(Exception e) {
 			System.out.println("cannot convert time");
-			System.out.println(dto.getStartTime().substring(0, 16) + ":00");
-			System.out.println(dto.getEndTime() + ":00");
+			System.out.println(dto.getStartTime());
+			System.out.println(dto.getEndTime());
 			return null;
 		}
 		scheduler.setRepeat(dto.getRepeat());

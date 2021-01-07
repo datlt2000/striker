@@ -1,7 +1,7 @@
 USE striker;
 
 insert into SCHOOLS(NAME, ADDRESS)
-values(N'Unknow', N'Unknow'), (N'Đại học Bách khoa Hà Nội', N'Số 1, Đại Cồ Việt, Hai Bà Trưng, Hà Nội');
+values(N'Đại học Bách khoa Hà Nội', N'Số 1, Đại Cồ Việt, Hai Bà Trưng, Hà Nội');
 
 insert into INFORS(BIRTHDAY, SEX, FIRST_NAME, LAST_NAME, SCHOOL_ID)
 select str_to_date('18-01-2000', '%d-%m-%Y'), 'male', N'Đạt', N'Lê Trọng', s.ID
@@ -9,8 +9,11 @@ from SCHOOLS as s
 where lower(s.NAME) like N'đại học bách khoa hà nội'
 limit 1;
 
+/*
+password: a
+*/
 insert into ACCOUNTS(PASSWORD, EMAIL, AUTHORITY, INFOR_ID)
-select 'dat12345678', 'dat@gmail.com', 'ADMIN', INFORS.ID
+select '$2y$10$9QN.Z8xqBy05b8fnlwX3J.2K0eSTCxZa/tNZJdfGY6tkvIMqoKWE2', 'dat@gmail.com', 'ROLE_ADMIN', INFORS.ID
 from INFORS
 where INFORS.BIRTHDAY = str_to_date('18-01-2000', '%d-%m-%Y')
 limit 1;

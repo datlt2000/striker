@@ -52,7 +52,7 @@ public class AccountBuilder {
 		Account acc = new Account();
 		acc.setEmail(this.email);
 		acc.setPassword(this.password);
-		acc.setAuthority("USER");
+		acc.setAuthority("ROLE_USER");
 		acc.setInfomation(infor);
 		return acc;
 	}

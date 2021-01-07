@@ -1,4 +1,4 @@
-import Axios from "axios";
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import InputGroup from "../components/InputGroup";
 import SideBar from "../components/SideBar";
@@ -17,7 +17,15 @@ function Tag(props) {
 
 function Account(props) {
 	const addData = (infor) => {
-		Axios.post(`/striker/api/infor/update-infor`, infor)
+		const token = localStorage.token;
+		axios({
+			method: "POST",
+			url: `/striker/api/infor/update-infor`,
+			data: infor,
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		})
 			.then(res => {
 				if (res.data) {
 					props.getData();
@@ -53,7 +61,15 @@ function Account(props) {
 }
 function School(props) {
 	const addData = (school) => {
-		Axios.post(`/striker/api/infor/update-school`, school)
+		const token = localStorage.token;
+		axios({
+			method: "POST",
+			url: `/striker/api/infor/update-school`,
+			data: school,
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		})
 			.then(res => {
 				if (res.data) {
 					props.getData();
@@ -83,7 +99,15 @@ function Password(props) {
 		if (pass.password !== pass.confirm) {
 			return false;
 		}
-		Axios.post(`/striker/api/infor/update-password`, { password: pass.password })
+		const token = localStorage.token;
+		axios({
+			method: "POST",
+			url: `/striker/api/infor/update-password`,
+			data: { password: pass.password },
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		})
 			.then(res => {
 				if (res.data) alert("success");
 				else alert("cannot update");
@@ -129,7 +153,15 @@ function Profile(props) {
 	const [tag, setTag] = useState(0);
 	const getData = () => {
 		const id = { id: props.infor.accountId };
-		Axios.post(`/striker/api/infor/get-infor`, id)
+		const token = localStorage.token;
+		axios({
+			method: "POST",
+			url: `/striker/api/infor/get-infor`,
+			data: id,
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		})
 			.then(res => {
 				if (res.data) {
 					props.setAccount(res.data);
