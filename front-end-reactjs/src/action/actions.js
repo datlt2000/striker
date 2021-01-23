@@ -258,6 +258,7 @@ export const login = (user) => {
 			.then(res => {
 				if (res.data.token) {
 					localStorage.setItem("token", res.data.token);
+					console.log(res.data.token)
 					dispatch(setUser(res.data));
 				}
 			})

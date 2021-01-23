@@ -162,7 +162,7 @@ export const defaultShortScheduler =
   description: "",
   office: "",
   type: "",
-  repeat: "FREQ=DAILY;INTERVAL=1;COUNT=1",
+  repeat: "",
   color: "",
   priority: "High",
   startTime: "",
@@ -190,7 +190,7 @@ export const accountRegister = {
   firstname: "Guest",
   lastName: "",
   sex: "male",
-  birthDay: "2000-01-18"
+  birthDay: "2000-01-01"
 }
 export const generation = {
   feedbacks: [

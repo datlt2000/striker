@@ -39,17 +39,17 @@ public class LoginController {
 	public ResponseEntity<?> login(@RequestBody(required = false) Map<String, String> json) throws Exception{
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(json.get("username"), json.get("password")));
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-			String jwt = util.generateToken(authentication);
-			CustomUserDetail user = (CustomUserDetail) authentication.getPrincipal();
-			loginService.loginAccount();
-			return ResponseEntity.ok(this.convertToDTO(jwt, user.getAcc()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = util.generateToken(authentication);
+		CustomUserDetail user = (CustomUserDetail) authentication.getPrincipal();
+		loginService.loginAccount();
+		return ResponseEntity.ok(this.convertToDTO(jwt, user.getAcc()));
 	}
 	
 	@PostMapping(value="/register")
 	public ResponseEntity<?> register(@RequestBody RegisterDTO user) throws Exception {
 		if(loginService.getAccountByEmail(user.getEmail()) != null) {
-			return ResponseEntity.badRequest().body("message: email exist");
+			return ResponseEntity.ok(false);
 		}
 		AccountBuilder builder = new AccountBuilder();
 		Account account = builder.setEmail(user.getEmail())
@@ -61,7 +61,13 @@ public class LoginController {
 								.buildAccount();
 		Account acc = loginService.createAccount(account);
 		if(acc == null) return ResponseEntity.ok(false);
-		return ResponseEntity.ok(true);
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = util.generateToken(authentication);
+		CustomUserDetail newUser = (CustomUserDetail) authentication.getPrincipal();
+		loginService.loginAccount();
+		return ResponseEntity.ok(this.convertToDTO(jwt, newUser.getAcc()));
 	}
 	
 	private LoginDTO convertToDTO(String jwt, Account acc) {
